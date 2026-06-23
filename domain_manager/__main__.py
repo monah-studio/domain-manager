@@ -2,7 +2,7 @@
 """
 Domain Manager — Unified CLI for 20+ domain/DNS providers.
 
-Open source: https://github.com/Monah-Limited/domain-manager
+Open source: https://github.com/monah-studio/domain-manager
 Install: pip install domain-manager
 """
 

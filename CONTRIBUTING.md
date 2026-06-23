@@ -4,7 +4,7 @@ We love contributions! Here's how to get involved.
 
 ## 🐛 Reporting Bugs
 
-1. Search [existing issues](https://github.com/Monah-Limited/domain-manager/issues) first
+1. Search [existing issues](https://github.com/monah-studio/domain-manager/issues) first
 2. Include your OS, Python version, and provider
 3. Run with `--json` and paste the output
 4. Redact any API keys before sharing

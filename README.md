@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](pyproject.toml)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![GitHub](https://img.shields.io/badge/GitHub-Monah--Limited%2Fdomain--manager-blue)](https://github.com/Monah-Limited/domain-manager)
+[![GitHub](https://img.shields.io/badge/GitHub-Monah--Limited%2Fdomain--manager-blue)](https://github.com/monah-studio/domain-manager)
 
 ```bash
 # One-command DDNS for your Raspberry Pi
@@ -63,7 +63,7 @@ pip install domain-manager
 Or clone & run:
 
 ```bash
-git clone https://github.com/Monah-Limited/domain-manager.git
+git clone https://github.com/monah-studio/domain-manager.git
 cd domain-manager
 python3 -m domain_manager --help
 ```
@@ -158,7 +158,7 @@ This project communicates with these provider APIs — thank you for maintaining
 
 **Architecture inspiration:** [octodns](https://github.com/octodns/octodns) (multi-provider DNS sync), [acme.sh](https://github.com/acmesh-official/acme.sh) (provider plugin pattern).
 
-**Sister projects:** [OpenBalance](https://github.com/Monah-Limited/OpenBalance), [SmartClipAI](https://github.com/Monah-Limited/SmartClipAI)
+**Sister projects:** [OpenBalance](https://github.com/monah-studio/OpenBalance), [SmartClipAI](https://github.com/monah-studio/SmartClipAI)
 
 ---
 

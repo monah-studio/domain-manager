@@ -19,7 +19,7 @@ metadata:
 
 ## Overview
 
-Open-source repo: **https://github.com/Monah-Limited/domain-manager**
+Open-source repo: **https://github.com/monah-studio/domain-manager**
 MIT licensed — contributions welcome via PR or issue.
 
 A Python CLI tool at `~/.hermes/scripts/domain_manager.py` (symlinked as
