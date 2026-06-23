@@ -22,7 +22,7 @@ class BaseProvider:
 
     @property
     def configured(self):
-        return all(f[0] in self._creds and self._creds[f[0]] for f in self.config_fields)
+        return all(f[0] in self._creds and self._creds[f[0]] for f in self.config_fields if f[2])
 
     def creds(self):
         return self._creds

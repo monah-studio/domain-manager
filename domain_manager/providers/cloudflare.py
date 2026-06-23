@@ -28,12 +28,15 @@ class Provider(BaseProvider):
         while page <= total_pages:
             data = http_request("GET", f"{API}{path}?page={page}&per_page=100",
                                headers=self._headers())
-            if isinstance(data, dict) and data.get("success") and data.get("result"):
-                results.extend(data["result"])
+            if isinstance(data, dict) and data.get("success"):
+                res = data.get("result", [])
+                if res is not None:
+                    results.extend(res if isinstance(res, list) else [res])
                 info = data.get("result_info", {})
                 total_pages = info.get("total_pages", 1)
             else:
-                err = data.get("errors", [{}])[0].get("message", str(data)) if isinstance(data, dict) else str(data)
+                errs = data.get("errors", []) if isinstance(data, dict) else []
+                err = errs[0].get("message", str(data)) if errs else str(data)
                 return {"error": err}
             page += 1
         return results

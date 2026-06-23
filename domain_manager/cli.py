@@ -23,10 +23,11 @@ def cmd_config(args):
     entry = {}
     for field_name, prompt, is_secret in fields:
         val = getattr(args, field_name.replace("-", "_"), None)
-        if not val:
+        if not val and is_secret:
             print(_("config_missing_field", field=field_name, prompt=prompt))
             return
-        entry[field_name] = val
+        if val:
+            entry[field_name] = val
 
     creds[p] = entry
     save_creds(creds)
