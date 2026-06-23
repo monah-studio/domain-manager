@@ -2,45 +2,45 @@
 
 import argparse
 import sys
+import os
 
 from . import __version__
 from .core import get_public_ip, save_creds, load_creds
 from .providers.registry import list_providers, get_provider, list_configured
+from .lang import _, set_lang, get_lang
 
 
 def cmd_config(args):
     creds = load_creds()
     p = args.provider.lower()
 
-    # Get the provider to display its config_fields
     prov = get_provider(p)
     if not prov:
-        print(f"Unknown provider: {p}. Supported: {', '.join(list_providers().keys())}")
+        print(_("config_unknown_provider", name=args.provider))
         return
 
     fields = prov.config_fields
     entry = {}
     for field_name, prompt, is_secret in fields:
-        # Check CLI args
         val = getattr(args, field_name.replace("-", "_"), None)
         if not val:
-            print(f"  --{field_name}  ({prompt})")
+            print(_("config_missing_field", field=field_name, prompt=prompt))
             return
         entry[field_name] = val
 
     creds[p] = entry
     save_creds(creds)
-    print(f"✅ {prov.label} credentials saved")
+    print(_("config_creds_saved", provider=prov.label))
 
 
 def cmd_status(args):
     providers = list_providers()
-    print("Configured providers:")
+    print(_("config_title"))
     for name, prov in sorted(providers.items()):
         if prov.configured:
-            print(f"  ✅ {prov.label:<20} ({name})")
+            print("  " + _("config_configured", provider=prov.label, name=name))
         else:
-            print(f"  ❌ {prov.label:<20} ({name}) — not configured")
+            print("  " + _("config_not_configured", provider=prov.label, name=name))
 
 
 def cmd_list(args):
@@ -55,7 +55,9 @@ def cmd_list(args):
     for name, prov in sorted(providers.items()):
         if not prov.configured:
             continue
-        print(f"\n── {prov.label} ──" if not args.json else "")
+        if not args.json:
+            title = _("list_title", provider=prov.label)
+            print(title)
         prov.list_domains(json_mode=args.json)
 
 
@@ -70,11 +72,12 @@ def cmd_dns(args):
         if not prov.configured:
             continue
         if args.action == "list":
-            print(f"\n── {prov.label} — {args.domain} ──" if not args.json else "")
+            if not args.json:
+                print(_("dns_title", provider=prov.label, domain=args.domain))
             prov.list_records(args.domain, json_mode=args.json)
         elif args.action == "update":
             if not all([args.domain, args.type, args.name, args.value]):
-                print("Usage: domain-manager dns update <domain> --type A --name @ --value <IP>")
+                print(_("dns_update_usage"))
                 return
             prov.update_record(args.domain, args.type.upper(), args.name, args.value, args.ttl)
 
@@ -101,7 +104,7 @@ def cmd_public_ip(args):
     if ip:
         print(ip)
     else:
-        print(f"Could not detect public IPv{4 if args.type == 'A' else 6} address")
+        print(_("ip_could_not_detect", version=4 if args.type == "A" else 6))
         sys.exit(1)
 
 
@@ -111,6 +114,8 @@ def build_parser():
         epilog="Open source: https://github.com/Monah-Limited/domain-manager",
     )
     parser.add_argument("--version", action="version", version=f"domain-manager {__version__}")
+    parser.add_argument("--lang", choices=["en", "zh"], default=None,
+                        help="Language: en (English) / zh (中文)  [env: DOMAIN_MANAGER_LANG]")
 
     sub = parser.add_subparsers(dest="command")
 
@@ -183,10 +188,18 @@ PROVIDER_HELP = """Available providers:
   aliyun           阿里云 DNS (AccessKey ID + AccessKey Secret)
   tencentcloud     腾讯云 DNS (SecretId + SecretKey)"""
 
-
 def main():
+    """Entry point for pip-installed console_script."""
     parser = build_parser()
-    args = parser.parse_args()
+    # Parse known args first to extract --lang, then parse fully
+    args, remaining = parser.parse_known_args()
+    if args.lang:
+        set_lang(args.lang)
+    # Re-parse with remaining args only (--lang already consumed)
+    if remaining:
+        args = parser.parse_args(remaining)
+    else:
+        args = parser.parse_args()
 
     if len(sys.argv) == 1:
         parser.print_help()

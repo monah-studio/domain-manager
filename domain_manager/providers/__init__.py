@@ -1,6 +1,7 @@
 """Provider base class — all providers inherit from this."""
 
 from ..core import get_provider_creds
+from ..lang import _, get_lang
 
 
 class BaseProvider:
@@ -25,6 +26,10 @@ class BaseProvider:
 
     def creds(self):
         return self._creds
+
+    def _(self, key, **kwargs):
+        """Translate with provider context."""
+        return _(key, provider=self.label, **kwargs)
 
     # ── API methods (override these) ────────────────────────────────────
 

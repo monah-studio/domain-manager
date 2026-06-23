@@ -24,10 +24,10 @@ class Provider(BaseProvider):
         return False, str(result)
 
     def list_domains(self, json_mode=False):
-        print(f"{self.label}: Use dashboard to manage hosts.")
+        print(self._("noip_dashboard", label=self.label))
 
     def list_records(self, domain, json_mode=False):
-        print(f"{self.label}: DDNS-only — records managed via dashboard.")
+        print(self._("noip_ddns_only", label=self.label))
 
     def update_record(self, domain, record_type, name, value, ttl=600):
         ok, msg = self._update(domain, record_type, value)

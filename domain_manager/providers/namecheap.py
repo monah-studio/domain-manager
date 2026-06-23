@@ -65,8 +65,7 @@ class Provider(BaseProvider):
             print(f"Error [{self.label}]: XML parse error: {e}")
 
     def update_record(self, domain, record_type, name, value, ttl=600):
-        print(f"{self.label} requires full zone re-submission via setHosts.")
-        print(f"Use the Namecheap dashboard or API directly for now.")
+        print(self._("namecheap_zone_required", label=self.label))
         return False
 
     def ddns(self, domain, record_type, name, ttl=600, quiet=False):

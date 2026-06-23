@@ -12,12 +12,12 @@ class Provider(BaseProvider):
     ]
 
     def list_domains(self, json_mode=False):
-        print(f"{self.label} manages subdomains; use the DuckDNS dashboard.")
+        print(self._("duckdns_subdomain", sub="<your-domain>.duckdns.org"))
         print("Domain: <your-domain>.duckdns.org")
 
     def list_records(self, domain, json_mode=False):
         subdomain = domain.replace(".duckdns.org", "")
-        print(f"Subdomain: {subdomain}")
+        print(self._("duckdns_subdomain", sub=subdomain))
         print(f"Use: domain-manager ddns {domain} --provider duckdns --type A --name @")
 
     def update_record(self, domain, record_type, name, value, ttl=600):
