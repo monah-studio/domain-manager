@@ -1,0 +1,4 @@
+domain-manager ddns example.com --type A --name home --quiet --ttl 300
+
+# Crontab entry:
+# */5 * * * * /usr/local/bin/domain-manager ddns example.com --type A --name home --quiet
