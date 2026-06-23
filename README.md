@@ -131,6 +131,37 @@ domain-manager ip --type AAAA
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
+## 🙏 Credits
+
+This project communicates with these provider APIs — thank you for maintaining them:
+
+| Provider | API Docs |
+|----------|----------|
+| [**GoDaddy**](https://developer.godaddy.com/doc) | Domain management REST API |
+| [**Cloudflare**](https://developers.cloudflare.com/api) | DNS zone & record API |
+| [**Namecheap**](https://www.namecheap.com/support/api/methods/) | XML-RPC domain & DNS API |
+| [**Porkbun**](https://porkbun.com/api/json/v3/documentation) | JSON API for domains & DNS |
+| [**Gandi**](https://api.gandi.net/docs) | LiveDNS REST API |
+| [**DigitalOcean**](https://docs.digitalocean.com/reference/api/api-reference/) | Domains & DNS API |
+| [**Vultr**](https://www.vultr.com/api/) | DNS API |
+| [**Hetzner**](https://dns.hetzner.com/api-docs) | DNS API |
+| [**OVH**](https://eu.api.ovh.com) | Domain & DNS API |
+| [**DNSimple**](https://developer.dnsimple.com) | Domain & DNS REST API |
+| [**NameSilo**](https://www.namesilo.com/api) | Domain API |
+| [**Bunny.net**](https://docs.bunny.net/reference) | DNS zone API |
+| [**Domain.com**](https://developer.domain.com) | Domain API |
+| [**DuckDNS**](https://www.duckdns.org) | Free DDNS API |
+| [**No-IP**](https://www.noip.com/integrate) | Dynamic DNS API |
+| [**Dynu**](https://www.dynu.com/API) | DNS & DDNS API |
+| [**阿里云 DNS**](https://help.aliyun.com/product/29697.html) | DNS API |
+| [**腾讯云 DNSPod**](https://docs.dnspod.cn/api) | DNS API |
+
+**Architecture inspiration:** [octodns](https://github.com/octodns/octodns) (multi-provider DNS sync), [acme.sh](https://github.com/acmesh-official/acme.sh) (provider plugin pattern).
+
+**Sister projects:** [OpenBalance](https://github.com/Monah-Limited/OpenBalance), [SmartClipAI](https://github.com/Monah-Limited/SmartClipAI)
+
+---
+
 ## 📄 License
 
 MIT — [Monah Limited](https://monah.ai)
