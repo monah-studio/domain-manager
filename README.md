@@ -1,4 +1,4 @@
-# 🖥️ Domain Manager
+# 🖥️ Domain Manager by Hermes Agent
 
 > **Unified CLI for 20+ domain & DNS providers** — list domains, manage records, auto-update DDNS from one terminal.
 

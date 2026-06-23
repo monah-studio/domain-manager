@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "domain-manager"
 version = "1.1.0"
-description = "Unified CLI for 20+ domain/DNS providers — list domains, manage DNS, auto-update DDNS"
+description = "Domain Manager by Hermes Agent — Unified CLI for 20+ domain/DNS providers, list domains, manage DNS, auto-update DDNS"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [

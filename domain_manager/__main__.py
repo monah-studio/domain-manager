@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Domain Manager — Unified CLI for 20+ domain/DNS providers.
+Domain Manager by Hermes Agent — Unified CLI for 20+ domain/DNS providers.
 
 Open source: https://github.com/monah-studio/domain-manager
 Install: pip install domain-manager

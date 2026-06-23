@@ -111,7 +111,7 @@ def cmd_public_ip(args):
 def build_parser():
     parser = argparse.ArgumentParser(
         description="Domain Manager — control 20+ domain/DNS providers from one CLI",
-        epilog="Open source: https://github.com/monah-studio/domain-manager",
+        epilog="Open source: https://github.com/monah-studio/domain-manager — Domain Manager by Hermes Agent",
     )
     parser.add_argument("--version", action="version", version=f"domain-manager {__version__}")
     parser.add_argument("--lang", choices=["en", "zh"], default=None,

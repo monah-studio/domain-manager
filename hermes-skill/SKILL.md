@@ -15,7 +15,7 @@ metadata:
     related_skills: [cronjob]
 ---
 
-# Domain Manager — Registrar API + DDNS
+# Domain Manager by Hermes Agent — Registrar API + DDNS
 
 ## Overview
 
