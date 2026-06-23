@@ -19,6 +19,9 @@ metadata:
 
 ## Overview
 
+Open-source repo: **https://github.com/Monah-Limited/domain-manager**
+MIT licensed — contributions welcome via PR or issue.
+
 A Python CLI tool at `~/.hermes/scripts/domain_manager.py` (symlinked as
 `domain-manager`) that talks to three major domain registrars:
 

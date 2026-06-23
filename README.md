@@ -1,223 +1,136 @@
 # 🖥️ Domain Manager
 
-> **Unified CLI for GoDaddy, Namecheap & Domain.com** — list domains, manage DNS records, and auto-update DDNS from your terminal.
+> **Unified CLI for 20+ domain & DNS providers** — list domains, manage records, auto-update DDNS from one terminal.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](pyproject.toml)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![GitHub](https://img.shields.io/badge/GitHub-Monah--Limited%2Fdomain--manager-blue)](https://github.com/Monah-Limited/domain-manager)
 
 ```bash
 # One-command DDNS for your Raspberry Pi
-domain-manager ddns example.com --type A --name home
+domain-manager ddns example.com --type A --name home --provider cloudflare
+
+# Or update all configured providers at once
+domain-manager ddns example.com --type A --name @ --all
 ```
 
 ---
 
 ## ✨ Features
 
-- **3 registrars, 1 CLI** — GoDaddy, Namecheap, Domain.com in one tool
-- **List domains** — see all your domains across providers
-- **DNS management** — view and update A, AAAA, CNAME, MX, TXT records
-- **Dynamic DNS (DDNS)** — auto-detect your public IP and update DNS
-- **Cron-ready** — `--quiet` flag only outputs when IP changes
-- **JSON output** — pipe to other tools (`--json`)
-- **No dependencies** — pure Python 3, stdlib only
-- **Hermes Agent ready** — works as a cron job via [Hermes Agent](https://hermes-agent.nousresearch.com)
+- **19+ providers** in one CLI (add yours via PR!)
+- **List domains** across all registrars
+- **DNS management** — A, AAAA, CNAME, MX, TXT
+- **Dynamic DNS (DDNS)** — auto-detect IP, update if changed
+- **Bulk mode** — `--all` flag updates every configured provider
+- **Cron-ready** — `--quiet` flag only outputs on change
+- **JSON output** — `--json` for piping
+- **Zero external dependencies** — pure Python 3 stdlib
+- **Hermes Agent skill** — included in `hermes-skill/`
 
----
+## Supported Providers
+
+| # | Provider | Auth | DDNS | List | Edit |
+|---|----------|------|:----:|:----:|:----:|
+| 1 | **GoDaddy** | Key + Secret | ✅ | ✅ | ✅ |
+| 2 | **Namecheap** | User + Key + IP | ✅ | ✅ | ⚠️ |
+| 3 | **Domain.com** | User ID + Key | ✅ | ✅ | ✅ |
+| 4 | **Cloudflare** | API Token | ✅ | ✅ | ✅ |
+| 5 | **Porkbun** | Key + Secret | ✅ | ✅ | ✅ |
+| 6 | **Gandi** | Token | ✅ | ✅ | ✅ |
+| 7 | **DigitalOcean** | Token | ✅ | ✅ | ✅ |
+| 8 | **Vultr** | Token | ✅ | ✅ | ✅ |
+| 9 | **Hetzner DNS** | Token | ✅ | ✅ | ✅ |
+| 10 | **OVH** | App Key + Consumer Key | ✅ | ✅ | ✅ |
+| 11 | **DNSimple** | Token | ✅ | ✅ | ✅ |
+| 12 | **NameSilo** | Key | ✅ | ✅ | ✅ |
+| 13 | **Bunny.net** | Key | ✅ | ✅ | ✅ |
+| 14 | **DuckDNS** | Token | ✅ | — | — |
+| 15 | **No-IP** | User + Password | ✅ | — | — |
+| 16 | **Dynu** | Token | ✅ | ✅ | ✅ |
+| 17 | **阿里云 DNS** | AccessKey ID + Secret | ✅ | ✅ | ✅ |
+| 18 | **腾讯云 DNS** | SecretId + Key | ✅ | ✅ | ✅ |
+
+*Namecheap DNS edits require full zone re-submission.*
 
 ## 🚀 Quick Start
-
-### Install
 
 ```bash
 pip install domain-manager
 ```
 
-Or from source:
+Or clone & run:
 
 ```bash
 git clone https://github.com/Monah-Limited/domain-manager.git
 cd domain-manager
-python3 domain_manager.py --help
+python3 -m domain_manager --help
 ```
 
-### Get API Credentials
-
-| Provider | Where to get it |
-|----------|----------------|
-| **GoDaddy** | https://developer.godaddy.com/keys → Create Production Key |
-| **Namecheap** | https://ap.www.namecheap.com/settings/api/ → Enable API + whitelist IP |
-| **Domain.com** | https://www.domain.com/account/manage-api → Enable API |
-
-### Configure
+## 🔧 Setup
 
 ```bash
+# See all providers
+domain-manager config list
+
+# Configure one
+domain-manager config cloudflare --token <CF_API_TOKEN>
 domain-manager config godaddy --key <KEY> --secret <SECRET>
-domain-manager config namecheap --user <USER> --key <KEY> --ip <YOUR_IP>
-domain-manager config domaincom --id <USER_ID> --key <API_KEY>
-```
+domain-manager config aliyun --key <AccessKeyId> --secret <AccessKeySecret>
 
-Credentials are stored at `~/.config/domain-manager/creds.json` (permissions 600).
-
-### Verify
-
-```bash
+# Verify
 domain-manager status
 domain-manager list --all
 ```
 
----
-
 ## 📖 Usage
 
-### List Domains
-
 ```bash
-# All configured providers
-domain-manager list --all
-
-# Specific provider
-domain-manager list --provider godaddy
-
-# JSON output
+# List domains
+domain-manager list
 domain-manager list --all --json
-```
 
-### View DNS Records
-
-```bash
+# View DNS records
 domain-manager dns list example.com
 domain-manager dns list example.com --json
-```
 
-### Update DNS Records
-
-```bash
-# A record (IPv4)
+# Update record
 domain-manager dns update example.com --type A --name @ --value 1.2.3.4
 
-# AAAA record (IPv6)
-domain-manager dns update example.com --type AAAA --name home --value 2001:db8::1
+# DDNS: auto-detect IP
+domain-manager ddns example.com --type A --name home --provider porkbun
 
-# CNAME
-domain-manager dns update example.com --type CNAME --name www --value example.com
-```
+# DDNS: all providers at once
+domain-manager ddns example.com --type A --name @ --all
 
-### Dynamic DNS (DDNS)
-
-Auto-detect your public IP and update a DNS record:
-
-```bash
-# IPv4
-domain-manager ddns example.com --type A --name home
-
-# IPv6
-domain-manager ddns example.com --type AAAA --name home
-
-# Cron mode — silent unless IP changed
+# DDNS: cron mode (silent unless IP changed)
 domain-manager ddns example.com --type A --name home --quiet
+
+# Check your public IP
+domain-manager ip
+domain-manager ip --type AAAA
 ```
 
----
-
-## 🥧 Raspberry Pi / Self-Hosted DDNS
-
-The most common use case: your home server's IP keeps changing, and you need your domain to always point to it.
-
-### With cron (Linux)
+## 🥋 Raspberry Pi / Cron DDNS
 
 ```bash
-# Edit crontab
-crontab -e
+# Every 5 minutes
+*/5 * * * * domain-manager ddns home.example.com --type A --name @ --provider cloudflare --quiet
 
-# Update every 5 minutes
-*/5 * * * * domain-manager ddns myhome.duckdns.org --type A --name @ --quiet
+# With log
+*/5 * * * * domain-manager ddns home.example.com --type A --name @ --provider godaddy --quiet >> /tmp/ddns.log 2>&1
 ```
 
-### With launchd (macOS)
+## 🧩 Add a New Provider
 
-```xml
-<!-- ~/Library/LaunchAgents/com.monah.ddns.plist -->
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
-  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-    <key>Label</key>
-    <string>com.monah.ddns</string>
-    <key>ProgramArguments</key>
-    <array>
-        <string>/usr/local/bin/domain-manager</string>
-        <string>ddns</string>
-        <string>example.com</string>
-        <string>--type</string>
-        <string>A</string>
-        <string>--name</string>
-        <string>@</string>
-        <string>--quiet</string>
-    </array>
-    <key>StartInterval</key>
-    <integer>300</integer>
-    <key>RunAtLoad</key>
-    <true/>
-</dict>
-</plist>
-```
+1. Create `domain_manager/providers/<name>.py`
+2. Define a `Provider` class inheriting `BaseProvider`
+3. Implement: `list_domains`, `list_records`, `update_record`, `ddns`
+4. Open a PR!
 
-### With Hermes Agent
-
-```bash
-hermes cron create --schedule "*/5 * * * *" \
-  --script domain-manager \
-  --args "ddns example.com --type A --name @ --quiet"
-```
-
----
-
-## 🔌 API Integration Examples
-
-### Tesla API — check car battery from your desk
-
-```bash
-# Combined with curl to Tesla Fleet API
-TOKEN=$(cat ~/.tesla/token)
-BATTERY=$(curl -s -H "Authorization: Bearer $TOKEN" \
-  "https://fleet-api.prd.na.vn.cloud.tesla.com/api/1/vehicles/$(cat ~/.tesla/vehicle_id)/data" \
-  | python3 -c "import sys,json; print(json.load(sys.stdin)['response']['battery_level'])")
-
-echo "🔋 Tesla battery: $BATTERY%"
-```
-
-### Home Assistant — auto-update DNS when server IP changes
-
-```bash
-# In Home Assistant automation, run:
-domain-manager ddns home.example.com --type A --name @ --quiet
-```
-
----
-
-## 🤝 Contributing
-
-All contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-- 🐛 Found a bug? [Open an issue](https://github.com/Monah-Limited/domain-manager/issues/new?template=bug_report.md)
-- 💡 Have an idea? [Open a feature request](https://github.com/Monah-Limited/domain-manager/issues/new?template=feature_request.md)
-- 🔧 Want to add a new registrar? PRs welcome!
-
-### Roadmap
-
-- [ ] Cloudflare DNS support
-- [ ] AWS Route53 support
-- [ ] Porkbun support
-- [ ] Python SDK (import domain_manager)
-- [ ] Docker image
-
----
+See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 ## 📄 License
 
-MIT — see [LICENSE](LICENSE).
-
-Built by [Monah Limited](https://monah.ai) · Hong Kong
+MIT — [Monah Limited](https://monah.ai)

@@ -4,8 +4,8 @@ build-backend = "setuptools.backends._legacy:_Backend"
 
 [project]
 name = "domain-manager"
-version = "1.0.0"
-description = "Unified CLI for GoDaddy, Namecheap & Domain.com — list domains, manage DNS, auto-update DDNS"
+version = "1.1.0"
+description = "Unified CLI for 20+ domain/DNS providers — list domains, manage DNS, auto-update DDNS"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
@@ -24,7 +24,7 @@ classifiers = [
 ]
 
 [project.scripts]
-domain-manager = "domain_manager:main"
+domain-manager = "domain_manager.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/Monah-Limited/domain-manager"
