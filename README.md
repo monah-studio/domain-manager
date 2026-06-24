@@ -162,6 +162,43 @@ This project communicates with these provider APIs — thank you for maintaining
 
 ---
 
+## 🇨🇳 简体中文
+
+**Domain Manager** 是一个统一的命令行工具，支持 20+ 域名注册商和 DNS 提供商的域名管理与 DDNS 自动更新。
+
+### 支持的国内 DNS 提供商
+
+本工具对以下中国主流 DNS 服务商提供完整支持：
+
+| # | 提供商 | 认证方式 | DDNS | 域名列表 | 记录编辑 |
+|---|--------|----------|:----:|:--------:|:--------:|
+| 17 | **阿里云 DNS** | AccessKey ID + Secret | ✅ | ✅ | ✅ |
+| 18 | **腾讯云 DNSPod** | SecretId + Key | ✅ | ✅ | ✅ |
+
+**阿里云 DNS** 通过阿里云 DNS API (`alidns.aliyuncs.com`) 实现域名解析管理，支持 A/AAAA/CNAME/MX/TXT 记录的全生命周期管理。
+
+**腾讯云 DNSPod** 通过 DNSPod API (`dnspod.tencentcloudapi.com`) 实现智能解析、负载均衡等高级 DNS 功能。
+
+### 配置示例
+
+```bash
+# 配置阿里云 DNS
+domain-manager config aliyun --key <AccessKeyId> --secret <AccessKeySecret>
+
+# 配置腾讯云 DNSPod
+domain-manager config tencentcloud --key <SecretId> --secret <SecretKey>
+```
+
+### 🙏 致谢
+
+感谢以下服务商提供的稳定 API 服务：
+
+- [阿里云 DNS](https://help.aliyun.com/product/29697.html) — 稳定可靠的域名解析服务
+- [腾讯云 DNSPod](https://docs.dnspod.cn/api) — 智能 DNS 解析与流量管理
+- 以及所有 [开源贡献者](https://github.com/monah-studio/domain-manager/graphs/contributors) 的代码贡献
+
+---
+
 ## 📄 License
 
 MIT — [Monah Limited](https://monah.ai)
